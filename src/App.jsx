@@ -481,7 +481,7 @@ const Contact = () => {
 
   // --- FINAL LIVE SUBMISSION LOGIC ---
   // This URL is the expected public address for your backend service (e.g., deployed on Render).
-  const API_URL = 'https://portfolio-shahid-backend.onrender.com/api/contact';
+  const API_URL = 'https://portfolio-shahid-backend.vercel.app/api/contact';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
