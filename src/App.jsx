@@ -85,7 +85,7 @@ const portfolioData = {
 
 // --- PROFILE IMAGE URL ---
 // Using a placeholder image for demonstration purposes. Replace with your actual image URL.
-const PROFILE_IMAGE_URL = "src/assets/shahid.jpeg";
+const PROFILE_IMAGE_URL = "https://portfolio-shahid-backend.vercel.app/src/assets/shahid.jpeg";
 // --- MOCK ICONS (using Lucide icons names) ---
 // In a real app, you would import these from 'lucide-react'
 const icons = {
