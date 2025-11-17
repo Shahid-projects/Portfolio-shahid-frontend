@@ -68,7 +68,7 @@ const portfolioData = {
       thumbnail: "/Registration-dash.png", // Path from public folder
       description: "Developed a dynamic dashboard with MongoDB integration and a user-friendly interface. Implemented JWT authentication, user registration, login validation, and secure cookie management.",
       stack: ["React", "Node.js", "Express.js", "MongoDB", "Bootstrap"],
-      link: "http://localhost:5173/",
+      link: "https://registration-dashboard-frontend.vercel.app/",
     },
     // PROJECT 3: Smart Waste Classification - Added Thumbnail (Note: 'Samart' fixed to 'Smart')
     {
