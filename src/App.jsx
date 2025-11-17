@@ -106,6 +106,8 @@ const icons = {
   X: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>,
   Briefcase: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>,
   GraduationCap: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></svg>,
+  // **NEW ICON ADDED**
+  Download: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>,
 };
 
 // --- HELPER COMPONENTS ---
@@ -278,17 +280,32 @@ const Hero = () => {
         >
           {portfolioData.title}
         </motion.p>
-        <motion.button
-          onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-          className="bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-bold py-3 px-8 rounded-full hover:from-violet-600 hover:to-indigo-600 transition-all duration-300 shadow-lg shadow-indigo-500/30"
+        {/* **UPDATED: Added a flex container for two buttons** */}
+        <motion.div
+          className="flex justify-center space-x-4" 
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          whileHover={{ scale: 1.05, y: -5 }}
-          whileTap={{ scale: 0.95 }}
         >
-          View My Work
-        </motion.button>
+          <motion.button
+            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            className="bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-bold py-3 px-8 rounded-full hover:from-violet-600 hover:to-indigo-600 transition-all duration-300 shadow-lg shadow-indigo-500/30"
+            whileHover={{ scale: 1.05, y: -5 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            View My Work
+          </motion.button>
+          {/* **NEW RESUME BUTTON** */}
+          <motion.a
+            href="/Shahid.pdf" // Ensure Shahid.pdf is in the public folder
+            download="Shahid-Fakir-Resume.pdf"
+            className="bg-slate-700 text-white font-bold py-3 px-8 rounded-full hover:bg-slate-600 transition-all duration-300 shadow-lg shadow-slate-700/30 border border-slate-600"
+            whileHover={{ scale: 1.05, y: -5 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Download Resume
+          </motion.a>
+        </motion.div>
       </div>
     </section>
   );
@@ -530,6 +547,18 @@ const Contact = () => {
       <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-16 items-start">
         <div className="text-slate-300">
           <h3 className="text-2xl font-bold text-slate-100 mb-4">Contact Information</h3>
+
+          {/* **NEW RESUME DOWNLOAD BUTTON IN CONTACT SECTION** */}
+          <motion.a
+            href="/Shahid.pdf" // Path to the file in the public folder
+            download="Shahid-Fakir-Resume.pdf"
+            className="flex items-center justify-center mb-8 w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-md hover:bg-indigo-700 transition-colors duration-300"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <icons.Download className="mr-3" /> Download Resume (PDF)
+          </motion.a>
+
           <p className="mb-8">
             Feel free to reach out to me for any opportunities, collaborations, or just to say hi!
           </p>
@@ -581,7 +610,7 @@ const Contact = () => {
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">Email</label>
             <input type="email" name="email" id="email" required value={formData.email} onChange={handleChange} className="w-full bg-slate-800 border border-slate-700 rounded-md py-2 px-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500" disabled={loading} />
-          </div>
+            </div>
           <div>
             <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">Message</label>
             <textarea name="message" id="message" rows="4" required value={formData.message} onChange={handleChange} className="w-full bg-slate-800 border border-slate-700 rounded-md py-2 px-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500" disabled={loading}></textarea>
