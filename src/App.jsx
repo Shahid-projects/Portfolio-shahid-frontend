@@ -84,8 +84,9 @@ const portfolioData = {
 };
 
 // --- PROFILE IMAGE URL ---
-// Using a placeholder image for demonstration purposes. Replace with your actual image URL.
-const PROFILE_IMAGE_URL = "https://portfolio-shahid-frontend.vercel.app/shahid.jpeg";// --- MOCK ICONS (using Lucide icons names) ---
+// Using the fixed, full deployed URL for the image
+const PROFILE_IMAGE_URL = "https://portfolio-shahid-frontend.vercel.app/shahid.jpeg";
+// --- MOCK ICONS (using Lucide icons names) ---
 // In a real app, you would import these from 'lucide-react'
 const icons = {
   Code: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>,
@@ -294,9 +295,9 @@ const Hero = () => {
           >
             View My Work
           </motion.button>
-          {/* **NEW RESUME BUTTON** */}
+          {/* **RESUME BUTTON** */}
           <motion.a
-            href="/Shahid.pdf" // Ensure Shahid.pdf is in the public folder
+            href="/Shahid.pdf" // Ensure Shahid.pdf is in the public folder for deployment
             download="Shahid-Fakir-Resume.pdf"
             className="bg-slate-700 text-white font-bold py-3 px-8 rounded-full hover:bg-slate-600 transition-all duration-300 shadow-lg shadow-slate-700/30 border border-slate-600"
             whileHover={{ scale: 1.05, y: -5 }}
@@ -324,7 +325,7 @@ const About = () => (
         transition={{ duration: 0.6 }}
       >
         <img
-          src={PROFILE_IMAGE_URL}
+          src={PROFILE_IMAGE_URL} // Uses the full Vercel URL
           alt={portfolioData.name}
           // Responsive, circular image with a nice border effect
           className="w-56 h-57 object-cover rounded-full shadow-2xl shadow-violet-500/20 border-4 border-slate-700 hover:border-violet-500 transition-all duration-500"
@@ -385,7 +386,7 @@ const TimelineItem = ({ icon, title, subtitle, period, description, isLast }) =>
           <IconComponent />
         </div>
         {!isLast && <div className="w-px h-full bg-slate-700"></div>}
-      </div>
+        </div>
       <div className="pb-16">
         <p className="text-sm text-indigo-400 mb-1">{period}</p>
         <h3 className="text-xl font-bold text-slate-100">{title}</h3>
@@ -547,7 +548,7 @@ const Contact = () => {
         <div className="text-slate-300">
           <h3 className="text-2xl font-bold text-slate-100 mb-4">Contact Information</h3>
 
-          {/* **NEW RESUME DOWNLOAD BUTTON IN CONTACT SECTION** */}
+          {/* **RESUME DOWNLOAD BUTTON IN CONTACT SECTION** */}
           <motion.a
             href="/Shahid.pdf" // Path to the file in the public folder
             download="Shahid-Fakir-Resume.pdf"
@@ -634,7 +635,7 @@ const Footer = () => (
     <div className="container mx-auto text-center text-slate-400">
       <p>&copy; {new Date().getFullYear()} {portfolioData.name}. All Rights Reserved.</p>
     </div>
-  </footer>
+    </footer>
 );
 
 
