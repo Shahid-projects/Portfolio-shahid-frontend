@@ -54,28 +54,34 @@ const portfolioData = {
     },
   ],
   projects: [
-    // NEW PROJECT ADDED HERE
+    // PROJECT 1: BuildWise AI - Added Thumbnail
     {
       title: "BuildWise AI – Intelligent Real Estate Management",
+      thumbnail: "/BuildWise-AI.png", // Path from public folder
       description: "An AI-powered real estate web platform for builders and developers. It manages projects, automates dynamic pricing, analyzes demand, and boosts sales using a full-stack architecture.",
       stack: ["React", "Spring Boot", "MySQL", "AWS", "AI/ML"],
-      link: "#buildwise-ai", // Placeholder link
+      link: "#buildwise-ai", 
     },
-    // EXISTING PROJECTS BELOW
+    // PROJECT 2: Registration Dashboard - Added Thumbnail
     {
       title: "Registration Dashboard",
+      thumbnail: "/Registration-dash.png", // Path from public folder
       description: "Developed a dynamic dashboard with MongoDB integration and a user-friendly interface. Implemented JWT authentication, user registration, login validation, and secure cookie management.",
       stack: ["React", "Node.js", "Express.js", "MongoDB", "Bootstrap"],
       link: "http://localhost:5173/",
     },
+    // PROJECT 3: Smart Waste Classification - Added Thumbnail (Note: 'Samart' fixed to 'Smart')
     {
-      title: "Samart Waste Classification",
+      title: "Smart Waste Classification",
+      thumbnail: "/Smart-Waste.png", // Path from public folder
       description: "Upload an image of your waste and get instant classification with detailed segregation tips. Help create a cleaner, greener future through proper waste management.",
       stack: ["Nodejs", "Reactjs", "MongoDB"],
       link: "http://localhost:3000/",
     },
+    // PROJECT 4: Shahid-AI Q&A System - Added Thumbnail
     {
       title: "Shahid-AI Q&A System",
+      thumbnail: "/Shahid-AI.png", // Path from public folder
       description: "Built an intelligent question-answering system using the Ollama CodeLlama model. The system handles natural language queries and delivers accurate responses through a Spring Boot backend and React.js frontend.",
       stack: ["Ollama Model", "Spring Boot", "Codellama", "React js"],
       link: "http://localhost:5175/",
@@ -84,9 +90,10 @@ const portfolioData = {
 };
 
 // --- PROFILE IMAGE URL ---
-// Using the fixed, full deployed URL for the image
-const PROFILE_IMAGE_URL = "/shahid.jpeg";// --- MOCK ICONS (using Lucide icons names) ---
-// In a real app, you would import these from 'lucide-react'
+// Using the correct relative path since the file is in the public folder
+const PROFILE_IMAGE_URL = "/shahid.jpeg";
+// --- MOCK ICONS (using Lucide icons names) ---
+// ... (icons object remains the same)
 const icons = {
   Code: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>,
   React: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="2"></circle><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48 0a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path></svg>,
@@ -109,9 +116,8 @@ const icons = {
   Download: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>,
 };
 
-// --- HELPER COMPONENTS ---
+// --- HELPER COMPONENTS (Unchanged) ---
 
-// Animated Section Wrapper
 const AnimatedSection = ({ children, id }) => {
   const controls = useAnimation();
   const ref = useRef(null);
@@ -142,7 +148,6 @@ const AnimatedSection = ({ children, id }) => {
   );
 };
 
-// Section Title
 const SectionTitle = ({ children }) => (
   <h2 className="relative text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16 text-slate-100">
     <span className="relative z-10">{children}</span>
@@ -154,6 +159,7 @@ const SectionTitle = ({ children }) => (
     />
   </h2>
 );
+
 
 // --- MAIN COMPONENTS ---
 
@@ -261,7 +267,7 @@ const Hero = () => {
             }}
           />
         ))}
-      </div>
+        </div>
       <div className="text-center z-10">
         <motion.h1
           className="text-5xl md:text-7xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-br from-violet-400 via-indigo-400 to-pink-400"
@@ -324,7 +330,7 @@ const About = () => (
         transition={{ duration: 0.6 }}
       >
         <img
-          src={PROFILE_IMAGE_URL} // Uses the full Vercel URL
+          src={PROFILE_IMAGE_URL} 
           alt={portfolioData.name}
           // Responsive, circular image with a nice border effect
           className="w-56 h-57 object-cover rounded-full shadow-2xl shadow-violet-500/20 border-4 border-slate-700 hover:border-violet-500 transition-all duration-500"
@@ -436,6 +442,7 @@ const Experience = () => (
   </AnimatedSection>
 );
 
+// **MODIFIED:** Added image display to ProjectCard
 const ProjectCard = ({ project, index }) => {
   const controls = useAnimation();
   const ref = useRef(null);
@@ -456,6 +463,17 @@ const ProjectCard = ({ project, index }) => {
       whileHover={{ scale: 1.03, y: -10, boxShadow: "0 25px 50px -12px rgb(99 102 241 / 0.25)", borderColor: '#8b5cf6' }}
       transition={{ duration: 0.3 }}
     >
+      {/* **NEW: Image Thumbnail** */}
+      {project.thumbnail && (
+        <div className="w-full h-48 overflow-hidden">
+          <img 
+            src={project.thumbnail} 
+            alt={`${project.title} Thumbnail`} 
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        </div>
+      )}
+      
       <div className="p-6">
         <h3 className="text-xl font-bold text-slate-100 mb-2">{project.title}</h3>
         <p className="text-slate-400 mb-4 h-24">{project.description}</p>
