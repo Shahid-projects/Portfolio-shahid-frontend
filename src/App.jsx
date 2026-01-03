@@ -57,12 +57,13 @@ const portfolioData = {
         // PROJECT 1: Google Ads Performance Analyzer project
         {
             title: "Google Ads Performance Analyzer & Troubleshooting Tool",
-            thumbnail: "/ads-performance-analyzer.png", // Add image in public folder
+            thumbnail: "/ads-performance-analyzer.png",
             description:
-                "Developed a data-driven dashboard to analyze Google Ads campaign performance. Implemented SQL-based analysis to evaluate impressions, clicks, CTR, CPC, and conversions. Built rule-based troubleshooting logic to identify underperforming ads and provide actionable recommendations for optimization.",
+                "Built an analytics dashboard to evaluate ad performance metrics and identify underperforming campaigns using SQL-based insights and rule-driven recommendations.",
             stack: ["React", "Node.js", "Express.js", "SQL", "Chart.js"],
             link: "https://ads-performance-analyzer.vercel.app/"
         }
+
         ,
         // PROJECT 2: Registration Dashboard - Added Thumbnail
         {
