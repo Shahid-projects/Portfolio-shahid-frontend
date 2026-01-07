@@ -60,7 +60,7 @@ const portfolioData = {
             thumbnail: "/ads-performance-analyzer.png",
             description:"Built an analytics dashboard to evaluate ad performance metrics and identify underperforming campaigns using SQL-based insights and rule-driven recommendations.",
             stack: ["React", "Node.js", "Express.js", "SQL", "Chart.js"],
-            link: "https://ads-performance-analyzer.vercel.app/"
+            link: "https://ads-analyzer-frontend.vercel.app/"
         }
 
         ,
