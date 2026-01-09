@@ -56,11 +56,21 @@ const portfolioData = {
     projects: [
         // PROJECT 1: Google Ads Performance Analyzer project
         {
-            title: "Google Ads Performance Analyzer & Troubleshooting Tool",
-            thumbnail: "/ads-performance-analyzer.png",
-            description:"Built an analytics dashboard to evaluate ad performance metrics and identify underperforming campaigns using SQL-based insights and rule-driven recommendations.",
-            stack: ["React", "Node.js", "Express.js", "SQL", "Chart.js"],
-            link: "https://ads-analyzer-frontend.vercel.app/"
+            title: "Project Management SaaS Platform",
+            thumbnail: "/project-management-saas.png",
+            description: "Built a full-featured SaaS platform for team collaboration and task management. Implemented multi-workspace support, role-based access control, Kanban boards with drag-and-drop, real-time updates using Socket.io, JWT authentication, and subscription-based access using Stripe.",
+            stack: [
+                "React",
+                "TypeScript",
+                "Node.js",
+                "Express.js",
+                "PostgreSQL",
+                "Prisma",
+                "Socket.io",
+                "Stripe",
+                "Tailwind CSS"
+            ],
+            link: "https://app-8t4ncskb8zcx.appmedo.com/login"
         }
 
         ,
