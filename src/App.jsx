@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useAnimation, useInView } from 'framer-motion';
+import { motion, useAnimation, useInView, AnimatePresence } from 'framer-motion';
 
-// DUMMY DATA (extracted from resume)
+// ─── GOOGLE COLOR SYSTEM ─────────────────────────────────────────────────────
+// Blue: #4285F4 | Red: #EA4335 | Yellow: #FBBC05 | Green: #34A853
+// ─────────────────────────────────────────────────────────────────────────────
+
 const portfolioData = {
     name: "Shahid Fakir",
     title: "Software Development Engineer",
@@ -14,305 +17,446 @@ const portfolioData = {
     },
     about: "A passionate and driven Software Development Engineer with experience in building and optimizing scalable web applications and services. Proficient in full-stack development, with a strong foundation in data structures, algorithms, and cloud technologies. Eager to contribute to challenging projects and grow with a dynamic team.",
     skills: [
-        { name: "Java", level: 90, icon: 'Code' },
-        { name: "DSA", level: 95, icon: 'Code' }, // Updated
-        { name: "LLM Models", level: 85, icon: 'Code' },
-        { name: "React", level: 95, icon: 'React' },
-        { name: "Node.js", level: 90, icon: 'Server' },
-        { name: "Spring Boot", level: 80, icon: 'Leaf' },
-        { name: "AWS", level: 75, icon: 'Cloud' },
-        { name: "Databases", level: 85, icon: 'Database' },
-        { name: "HTML/CSS/JavaScript", level: 95, icon: 'Layout' }, // Updated
-        { name: "Git", level: 90, icon: 'GitBranch' },
+        { name: "Java", level: 90, color: "#EA4335" },
+        { name: "DSA", level: 95, color: "#4285F4" },
+        { name: "LLM Models", level: 85, color: "#34A853" },
+        { name: "React", level: 95, color: "#4285F4" },
+        { name: "Node.js", level: 90, color: "#34A853" },
+        { name: "Spring Boot", level: 80, color: "#EA4335" },
+        { name: "AWS", level: 75, color: "#FBBC05" },
+        { name: "Databases", level: 85, color: "#4285F4" },
+        { name: "HTML/CSS/JS", level: 95, color: "#EA4335" },
+        { name: "Git", level: 90, color: "#34A853" },
     ],
     experience: [
         {
-            role: "Software Development Engineer Internship",
+            role: "Software Development Engineer Intern",
             company: "Nobel Technology India Pvt Ltd",
-            period: "July 2025 - Present",
-            description: "Worked on low-level design and implementation for APIs for a redesigned Store Launch Tool. Redesigned an existing API, achieving a 90% reduction in latency. Implemented business and tech metrics in high-traffic micro-services and developed a feature for package returns in NA/EU regions.",
+            period: "July 2025 – Present",
+            description: "Worked on low-level design and implementation for APIs for a redesigned Store Launch Tool. Redesigned an existing API, achieving a 90% reduction in latency. Implemented business and tech metrics in high-traffic micro-services.",
+            accent: "#4285F4",
         },
         {
-            role: "MERN Stack Internship",
+            role: "MERN Stack Intern",
             company: "Inovitrix India Pvt Ltd",
-            period: "Feb 2024 - Mar 2025",
-            description: "Developed a full-scale online food delivery platform. Integrated backend APIs for real-time data retrieval, enhancing user experience. Designed a user-friendly interface with real-time notifications and a ratings system.",
+            period: "Feb 2024 – Mar 2025",
+            description: "Developed a full-scale online food delivery platform. Integrated backend APIs for real-time data retrieval. Designed a user-friendly interface with real-time notifications and a ratings system.",
+            accent: "#34A853",
         },
     ],
     education: [
         {
             degree: "Masters of Computer Application",
-            institution: "VPIMSR Collage Sangli",
-            period: "2025 - 2026",
+            institution: "VPIMSR College Sangli",
+            period: "2025 – 2026",
             cgpa: "8.5 CGPA",
+            accent: "#EA4335",
         },
         {
-            degree: "Bachelor of Technology in Computer Science",
+            degree: "B.Tech in Computer Science",
             institution: "Willingdon College Sangli",
-            period: "2021 - 2024",
+            period: "2021 – 2024",
             cgpa: "8.7 CGPA",
+            accent: "#FBBC05",
         },
     ],
     projects: [
-        // PROJECT 1: Google Ads Performance Analyzer project
         {
-            title: "Project Management SaaS Platform",
+            title: "Project Management SaaS",
             thumbnail: "/project-management-saas.png",
-            description: "Built a full-featured SaaS platform for team collaboration and task management. Implemented multi-workspace support, role-based access control, Kanban boards with drag-and-drop, real-time updates using Socket.io, JWT authentication, and subscription-based access using Stripe.",
-            stack: [
-                "React",
-                "TypeScript",
-                "Node.js",
-                "Express.js",
-                "PostgreSQL",
-                "Prisma",
-                "Socket.io",
-                "Stripe",
-                "Tailwind CSS"
-            ],
-            link: "https://app-8t4ncskb8zcx.appmedo.com/login"
-        }
-
-        ,
-        // PROJECT 2: Registration Dashboard - Added Thumbnail
+            description: "Full-featured SaaS platform for team collaboration. Kanban boards, real-time updates via Socket.io, JWT auth, and Stripe subscriptions.",
+            stack: ["React", "TypeScript", "Node.js", "PostgreSQL", "Socket.io", "Stripe"],
+            link: "https://app-8t4ncskb8zcx.appmedo.com/login",
+            accent: "#4285F4",
+            label: "SaaS",
+        },
         {
             title: "Registration Dashboard",
-            thumbnail: "/Registration-dash.png", // Path from public folder
-            description: "Developed a dynamic dashboard with MongoDB integration and a user-friendly interface. Implemented JWT authentication, user registration, login validation, and secure cookie management.",
+            thumbnail: "/Registration-dash.png",
+            description: "Dynamic dashboard with MongoDB integration, JWT authentication, user registration, login validation, and secure cookie management.",
             stack: ["React", "Node.js", "Express.js", "MongoDB", "Bootstrap"],
             link: "https://registration-dashboard-frontend.vercel.app/",
+            accent: "#34A853",
+            label: "Dashboard",
         },
-        // PROJECT 3: Smart Waste Classification - Added Thumbnail (Note: 'Samart' fixed to 'Smart')
         {
             title: "Smart Waste Classification",
-            thumbnail: "/Smart-Waste.png", // Path from public folder
-            description: "Upload an image of your waste and get instant classification with detailed segregation tips. Help create a cleaner, greener future through proper waste management.",
-            stack: ["Nodejs", "Reactjs", "MongoDB"],
+            thumbnail: "/Smart-Waste.png",
+            description: "Upload an image to get instant AI-powered waste classification with detailed segregation tips for a cleaner, greener future.",
+            stack: ["Node.js", "React.js", "MongoDB"],
             link: "https://smart-waste-frontend-orcin.vercel.app/",
-        }
+            accent: "#EA4335",
+            label: "AI/ML",
+        },
     ],
 };
 
-// --- PROFILE IMAGE URL ---
-// Using the correct relative path since the file is in the public folder
 const PROFILE_IMAGE_URL = "/shahid.jpeg";
-// --- MOCK ICONS (using Lucide icons names) ---
-// ... (icons object remains the same)
-const icons = {
-    Code: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>,
-    React: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="2"></circle><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48 0a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path></svg>,
-    Server: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>,
-    Leaf: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>,
-    Cloud: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>,
-    Database: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>,
-    Layout: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>,
-    GitBranch: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>,
-    Mail: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>,
-    Phone: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>,
-    Linkedin: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>,
-    Github: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>,
-    Instagram: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>,
-    Menu: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" /></svg>,
-    X: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>,
-    Briefcase: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>,
-    GraduationCap: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z" /><path d="M6 12v5c3 3 9 3 12 0v-5" /></svg>,
-    // **NEW ICON ADDED**
-    Download: () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>,
+const GOOGLE_COLORS = ["#4285F4", "#EA4335", "#FBBC05", "#34A853"];
+
+// ─── SVG ICONS ────────────────────────────────────────────────────────────────
+const Icon = {
+    Mail: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+    Phone: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>,
+    Linkedin: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>,
+    Github: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>,
+    Instagram: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>,
+    Download: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>,
+    Menu: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="22" height="22"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>,
+    X: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="22" height="22"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+    Arrow: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>,
+    Search: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
 };
 
-// --- HELPER COMPONENTS (Unchanged) ---
+// ─── GOOGLE LOGO LETTERS ─────────────────────────────────────────────────────
+const GoogleColorName = ({ name }) => {
+    const colors = ["#4285F4", "#EA4335", "#FBBC05", "#4285F4", "#34A853", "#EA4335", "#4285F4", "#34A853", "#FBBC05", "#EA4335", "#4285F4", "#34A853"];
+    return (
+        <span style={{ fontFamily: "'Google Sans', 'Nunito', sans-serif", fontWeight: 700 }}>
+            {name.split('').map((char, i) =>
+                char === ' ' ? <span key={i}>&nbsp;</span> : (
+                    <span key={i} style={{ color: colors[i % colors.length] }}>{char}</span>
+                )
+            )}
+        </span>
+    );
+};
 
-const AnimatedSection = ({ children, id }) => {
+// ─── GOOGLE DOTS LOADER ──────────────────────────────────────────────────────
+const GoogleDots = () => (
+    <div style={{ display: 'flex', gap: 8, justifyContent: 'center', margin: '24px 0' }}>
+        {GOOGLE_COLORS.map((color, i) => (
+            <motion.div
+                key={i}
+                style={{ width: 12, height: 12, borderRadius: '50%', background: color }}
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 0.8, delay: i * 0.12, repeat: Infinity, ease: 'easeInOut' }}
+            />
+        ))}
+    </div>
+);
+
+// ─── SECTION TITLE ────────────────────────────────────────────────────────────
+const SectionTitle = ({ children, subtitle }) => (
+    <div style={{ textAlign: 'center', marginBottom: 56 }}>
+        <h2 style={{
+            fontFamily: "'Google Sans', 'Nunito', sans-serif",
+            fontSize: 'clamp(28px, 4vw, 40px)',
+            fontWeight: 700,
+            color: '#202124',
+            marginBottom: 12,
+            letterSpacing: '-0.5px',
+        }}>
+            {children}
+        </h2>
+        {subtitle && <p style={{ color: '#5F6368', fontSize: 16, fontFamily: "'Roboto', sans-serif" }}>{subtitle}</p>}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 16 }}>
+            {GOOGLE_COLORS.map((c, i) => (
+                <motion.div
+                    key={i}
+                    style={{ height: 4, borderRadius: 2, background: c }}
+                    initial={{ width: 0 }}
+                    whileInView={{ width: 32 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: i * 0.1 }}
+                />
+            ))}
+        </div>
+    </div>
+);
+
+// ─── ANIMATED SECTION ────────────────────────────────────────────────────────
+const AnimatedSection = ({ children, id, style = {} }) => {
     const controls = useAnimation();
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-100px 0px" });
+    const inView = useInView(ref, { once: true, margin: '-80px 0px' });
 
     useEffect(() => {
-        if (inView) {
-            controls.start("visible");
-        }
+        if (inView) controls.start('visible');
     }, [controls, inView]);
 
     return (
         <motion.section
             id={id}
             ref={ref}
-            className="py-20 lg:py-32"
             initial="hidden"
             animate={controls}
             variants={{
-                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-                hidden: { opacity: 0, y: 50 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+                hidden: { opacity: 0, y: 40 },
             }}
+            style={{ padding: '80px 0', ...style }}
         >
-            <div className="container mx-auto px-4">
+            <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px' }}>
                 {children}
             </div>
         </motion.section>
     );
 };
 
-const SectionTitle = ({ children }) => (
-    <h2 className="relative text-3xl lg:text-4xl font-bold text-center mb-12 lg:mb-16 text-slate-100">
-        <span className="relative z-10">{children}</span>
-        <motion.div
-            className="absolute bottom-[-10px] left-1/2 -translate-x-1/2 h-1 w-24 bg-gradient-to-r from-violet-500 to-indigo-500"
-            initial={{ width: 0 }}
-            whileInView={{ width: "6rem", transition: { duration: 0.5, delay: 0.2 } }}
-            viewport={{ once: true }}
-        />
-    </h2>
-);
-
-
-// --- MAIN COMPONENTS ---
-
+// ─── HEADER ───────────────────────────────────────────────────────────────────
 const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        const onScroll = () => setScrolled(window.scrollY > 20);
+        window.addEventListener('scroll', onScroll);
+        return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
     const navLinks = ["About", "Skills", "Experience", "Projects", "Contact"];
-
-    const scrollToSection = (id) => {
-        document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' });
-        setIsOpen(false);
-    };
+    const scroll = (id) => { document.getElementById(id.toLowerCase())?.scrollIntoView({ behavior: 'smooth' }); setIsOpen(false); };
 
     return (
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-slate-900/80 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
-            <div className="container mx-auto px-4 flex justify-between items-center h-20">
+        <header style={{
+            position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
+            background: scrolled ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.8)',
+            backdropFilter: 'blur(12px)',
+            borderBottom: scrolled ? '1px solid #E8EAED' : '1px solid transparent',
+            transition: 'all 0.3s ease',
+            boxShadow: scrolled ? '0 1px 8px rgba(0,0,0,0.08)' : 'none',
+        }}>
+            <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 24px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <motion.div
-                    className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-400"
-                    initial={{ opacity: 0, x: -50 }}
+                    initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5 }}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 >
-                    {portfolioData.name}
+                    <GoogleColorName name="Shahid" />
                 </motion.div>
-                <nav className="hidden md:flex space-x-8">
+
+                {/* Desktop nav */}
+                <nav style={{ display: 'flex', gap: 4, alignItems: 'center' }} className="hide-mobile">
                     {navLinks.map((link, i) => (
                         <motion.button
                             key={link}
-                            onClick={() => scrollToSection(link)}
-                            className="text-slate-300 hover:text-violet-400 transition-colors duration-300"
-                            initial={{ opacity: 0, y: -20 }}
+                            onClick={() => scroll(link)}
+                            initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.1 * i }}
+                            transition={{ delay: 0.05 * i }}
+                            style={{
+                                background: 'none', border: 'none', cursor: 'pointer',
+                                padding: '8px 16px', borderRadius: 20,
+                                fontFamily: "'Roboto', sans-serif",
+                                fontSize: 14, fontWeight: 500,
+                                color: '#3C4043',
+                                transition: 'all 0.2s',
+                            }}
+                            whileHover={{ background: '#F1F3F4', color: '#202124' }}
                         >
                             {link}
                         </motion.button>
                     ))}
+                    <motion.a
+                        href="/Shahid.pdf"
+                        download
+                        style={{
+                            marginLeft: 8,
+                            padding: '8px 20px',
+                            borderRadius: 20,
+                            background: '#4285F4',
+                            color: '#fff',
+                            textDecoration: 'none',
+                            fontSize: 14,
+                            fontWeight: 500,
+                            fontFamily: "'Roboto', sans-serif",
+                            display: 'flex', alignItems: 'center', gap: 6,
+                        }}
+                        whileHover={{ background: '#3367D6', scale: 1.02 }}
+                        whileTap={{ scale: 0.97 }}
+                    >
+                        <Icon.Download /> Resume
+                    </motion.a>
                 </nav>
-                <div className="md:hidden">
-                    <button onClick={() => setIsOpen(!isOpen)} className="text-slate-300">
-                        {isOpen ? <icons.X /> : <icons.Menu />}
-                    </button>
-                </div>
+
+                {/* Mobile hamburger */}
+                <button
+                    className="show-mobile"
+                    onClick={() => setIsOpen(!isOpen)}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#3C4043' }}
+                >
+                    {isOpen ? <Icon.X /> : <Icon.Menu />}
+                </button>
             </div>
-            {/* Mobile Menu */}
-            <motion.div
-                className="md:hidden bg-slate-900"
-                initial={{ height: 0 }}
-                animate={{ height: isOpen ? 'auto' : 0 }}
-                style={{ overflow: 'hidden' }}
-                transition={{ duration: 0.3 }}
-            >
-                <div className="flex flex-col items-center py-4">
-                    {navLinks.map((link) => (
-                        <button key={link} onClick={() => scrollToSection(link)} className="py-2 text-slate-300 hover:text-violet-400">
-                            {link}
-                        </button>
-                    ))}
-                </div>
-            </motion.div>
+
+            {/* Mobile menu */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        style={{ overflow: 'hidden', borderTop: '1px solid #E8EAED', background: '#fff' }}
+                    >
+                        <div style={{ display: 'flex', flexDirection: 'column', padding: '12px 24px 16px' }}>
+                            {navLinks.map((link) => (
+                                <button
+                                    key={link}
+                                    onClick={() => scroll(link)}
+                                    style={{
+                                        background: 'none', border: 'none', textAlign: 'left',
+                                        padding: '12px 0', cursor: 'pointer',
+                                        fontFamily: "'Roboto', sans-serif", fontSize: 15,
+                                        color: '#3C4043', borderBottom: '1px solid #F1F3F4',
+                                    }}
+                                >
+                                    {link}
+                                </button>
+                            ))}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </header>
     );
 };
 
+// ─── HERO ─────────────────────────────────────────────────────────────────────
 const Hero = () => {
-    const particles = Array.from({ length: 50 });
-
     return (
-        <section id="hero" className="relative h-screen flex items-center justify-center bg-slate-900 text-white overflow-hidden">
-            <div className="absolute inset-0 z-0 bg-grid-slate-800/20 [mask-image:linear-gradient(to_bottom,white_5%,transparent_90%)]"></div>
-            <div className="absolute inset-0 z-0">
-                {particles.map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute rounded-full"
-                        initial={{
-                            x: Math.random() * 100 + 'vw',
-                            y: Math.random() * 100 + 'vh',
-                            scale: Math.random() * 0.5 + 0.5,
-                            opacity: Math.random() * 0.5,
-                            backgroundColor: ['#8b5cf6', '#6366f1', '#ec4899'][i % 3]
-                        }}
-                        animate={{
-                            x: Math.random() * 100 + 'vw',
-                            y: Math.random() * 100 + 'vh',
-                        }}
-                        transition={{
-                            duration: Math.random() * 20 + 20,
-                            repeat: Infinity,
-                            repeatType: 'reverse',
-                            ease: 'linear',
-                        }}
-                        style={{
-                            width: Math.random() * 10 + 5,
-                            height: Math.random() * 10 + 5,
-                        }}
-                    />
-                ))}
-            </div>
-            <div className="text-center z-10">
-                <motion.h1
-                    className="text-5xl md:text-7xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-br from-violet-400 via-indigo-400 to-pink-400"
+        <section id="hero" style={{
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: '#fff',
+            position: 'relative',
+            overflow: 'hidden',
+            paddingTop: 64,
+        }}>
+            {/* Decorative blobs */}
+            {[
+                { color: '#4285F4', x: '-5%', y: '10%', size: 320, opacity: 0.07 },
+                { color: '#EA4335', x: '80%', y: '5%', size: 280, opacity: 0.06 },
+                { color: '#FBBC05', x: '60%', y: '70%', size: 240, opacity: 0.08 },
+                { color: '#34A853', x: '5%', y: '75%', size: 200, opacity: 0.06 },
+            ].map((blob, i) => (
+                <motion.div
+                    key={i}
+                    style={{
+                        position: 'absolute', borderRadius: '50%',
+                        width: blob.size, height: blob.size,
+                        background: blob.color,
+                        left: blob.x, top: blob.y,
+                        opacity: blob.opacity,
+                        filter: 'blur(60px)',
+                        zIndex: 0,
+                    }}
+                    animate={{ scale: [1, 1.15, 1], x: [0, 20, 0] }}
+                    transition={{ duration: 8 + i * 2, repeat: Infinity, ease: 'easeInOut' }}
+                />
+            ))}
+
+            {/* Grid pattern */}
+            <div style={{
+                position: 'absolute', inset: 0, zIndex: 0,
+                backgroundImage: `
+                    linear-gradient(rgba(66,133,244,0.04) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(66,133,244,0.04) 1px, transparent 1px)
+                `,
+                backgroundSize: '40px 40px',
+            }} />
+
+            <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '0 24px', maxWidth: 800, margin: '0 auto' }}>
+                {/* Search bar aesthetic */}
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+                    transition={{ duration: 0.5 }}
+                    style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 10,
+                        background: '#fff',
+                        border: '1px solid #DFE1E5',
+                        borderRadius: 24,
+                        padding: '10px 20px',
+                        marginBottom: 40,
+                        boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+                    }}
                 >
-                    {portfolioData.name}
-                </motion.h1>
-                <motion.p
-                    className="text-xl md:text-2xl text-indigo-300 mb-8"
+                    <Icon.Search />
+                    <span style={{ fontFamily: "'Roboto', sans-serif", color: '#5F6368', fontSize: 14 }}>
+                        shahidfakir48@gmail.com
+                    </span>
+                    {GOOGLE_COLORS.map((c, i) => (
+                        <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />
+                    ))}
+                </motion.div>
+
+                <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
+                    transition={{ duration: 0.6, delay: 0.15 }}
+                    style={{
+                        fontFamily: "'Google Sans', 'Nunito', sans-serif",
+                        fontSize: 'clamp(48px, 8vw, 88px)',
+                        fontWeight: 700,
+                        lineHeight: 1.1,
+                        marginBottom: 16,
+                        letterSpacing: '-2px',
+                    }}
+                >
+                    <GoogleColorName name={portfolioData.name} />
+                </motion.h1>
+
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    style={{
+                        fontFamily: "'Roboto', sans-serif",
+                        fontSize: 'clamp(16px, 2.5vw, 22px)',
+                        color: '#5F6368',
+                        marginBottom: 48,
+                        fontWeight: 400,
+                        letterSpacing: '0.2px',
+                    }}
                 >
                     {portfolioData.title}
                 </motion.p>
-                {/* **UPDATED: Added a flex container for two buttons** */}
+
+                <GoogleDots />
+
                 <motion.div
-                    className="flex justify-center space-x-4"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.6 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap', marginTop: 32 }}
                 >
                     <motion.button
                         onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-bold py-3 px-8 rounded-full hover:from-violet-600 hover:to-indigo-600 transition-all duration-300 shadow-lg shadow-indigo-500/30"
-                        whileHover={{ scale: 1.05, y: -5 }}
-                        whileTap={{ scale: 0.95 }}
+                        style={{
+                            padding: '14px 32px', borderRadius: 24,
+                            background: '#4285F4', color: '#fff',
+                            border: 'none', cursor: 'pointer',
+                            fontFamily: "'Roboto', sans-serif",
+                            fontSize: 15, fontWeight: 500,
+                            boxShadow: '0 2px 12px rgba(66,133,244,0.35)',
+                            display: 'flex', alignItems: 'center', gap: 8,
+                        }}
+                        whileHover={{ background: '#3367D6', y: -2, boxShadow: '0 6px 20px rgba(66,133,244,0.4)' }}
+                        whileTap={{ scale: 0.97 }}
                     >
-                        View My Work
+                        View My Work <Icon.Arrow />
                     </motion.button>
-                    {/* **RESUME BUTTON** */}
                     <motion.a
-                        href="/Shahid.pdf" // Ensure Shahid.pdf is in the public folder for deployment
-                        download="Shahid-Fakir-Resume.pdf"
-                        className="bg-slate-700 text-white font-bold py-3 px-8 rounded-full hover:bg-slate-600 transition-all duration-300 shadow-lg shadow-slate-700/30 border border-slate-600"
-                        whileHover={{ scale: 1.05, y: -5 }}
-                        whileTap={{ scale: 0.95 }}
+                        href="/Shahid.pdf" download="Shahid-Fakir-Resume.pdf"
+                        style={{
+                            padding: '14px 32px', borderRadius: 24,
+                            background: '#fff', color: '#4285F4',
+                            border: '1px solid #4285F4',
+                            textDecoration: 'none',
+                            fontFamily: "'Roboto', sans-serif",
+                            fontSize: 15, fontWeight: 500,
+                            display: 'flex', alignItems: 'center', gap: 8,
+                        }}
+                        whileHover={{ background: '#F8F9FF', y: -2 }}
+                        whileTap={{ scale: 0.97 }}
                     >
-                        Download Resume
+                        <Icon.Download /> Download Resume
                     </motion.a>
                 </motion.div>
             </div>
@@ -320,366 +464,683 @@ const Hero = () => {
     );
 };
 
-// --- UPDATED ABOUT COMPONENT WITH PROFILE IMAGE ---
+// ─── ABOUT ────────────────────────────────────────────────────────────────────
 const About = () => (
-    <AnimatedSection id="about">
-        <SectionTitle>About Me</SectionTitle>
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-12 items-center">
-            {/* Image Column */}
+    <AnimatedSection id="about" style={{ background: '#F8F9FA' }}>
+        <SectionTitle subtitle="Get to know me">About Me</SectionTitle>
+        <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: 48,
+            alignItems: 'center',
+        }}>
             <motion.div
-                className="md:col-span-1 flex justify-center"
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6 }}
+                style={{ display: 'flex', justifyContent: 'center' }}
+                initial={{ opacity: 0, scale: 0.85 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
             >
-                <img
-                    src={PROFILE_IMAGE_URL}
-                    alt={portfolioData.name}
-                    // Responsive, circular image with a nice border effect
-                    className="w-56 h-57 object-cover rounded-full shadow-2xl shadow-violet-500/20 border-4 border-slate-700 hover:border-violet-500 transition-all duration-500"
-                />
+                <div style={{ position: 'relative' }}>
+                    {/* Colored rings */}
+                    {GOOGLE_COLORS.map((c, i) => (
+                        <motion.div
+                            key={i}
+                            style={{
+                                position: 'absolute',
+                                inset: -(i * 6 + 8),
+                                borderRadius: '50%',
+                                border: `3px solid ${c}`,
+                                opacity: 0.25 - i * 0.04,
+                                zIndex: 0,
+                            }}
+                            animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
+                            transition={{ duration: 20 + i * 5, repeat: Infinity, ease: 'linear' }}
+                        />
+                    ))}
+                    <img
+                        src={PROFILE_IMAGE_URL}
+                        alt={portfolioData.name}
+                        style={{
+                            width: 200, height: 200,
+                            objectFit: 'cover',
+                            borderRadius: '50%',
+                            border: '4px solid #fff',
+                            boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+                            position: 'relative', zIndex: 1,
+                        }}
+                    />
+                </div>
             </motion.div>
-            {/* Text Column */}
+
             <motion.div
-                className="md:col-span-2 text-center md:text-left text-slate-300 text-lg leading-relaxed"
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
             >
-                <p className="mb-4 text-xl font-semibold text-violet-400">Hello, I'm {portfolioData.name}.</p>
-                <p>{portfolioData.about}</p>
+                <p style={{
+                    fontFamily: "'Google Sans', 'Nunito', sans-serif",
+                    fontSize: 22, fontWeight: 700,
+                    color: '#4285F4', marginBottom: 16,
+                }}>
+                    Hello, I'm {portfolioData.name}! 👋
+                </p>
+                <p style={{
+                    fontFamily: "'Roboto', sans-serif",
+                    fontSize: 16, lineHeight: 1.75,
+                    color: '#3C4043',
+                }}>
+                    {portfolioData.about}
+                </p>
+
+                {/* Stats row */}
+                <div style={{ display: 'flex', gap: 24, marginTop: 32, flexWrap: 'wrap' }}>
+                    {[
+                        { label: 'Projects', value: '3+', color: '#4285F4' },
+                        { label: 'CGPA', value: '8.7', color: '#34A853' },
+                        { label: 'Latency Cut', value: '90%', color: '#EA4335' },
+                    ].map((stat, i) => (
+                        <div key={i} style={{
+                            background: '#fff',
+                            border: `2px solid ${stat.color}20`,
+                            borderRadius: 16,
+                            padding: '16px 24px',
+                            textAlign: 'center',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                        }}>
+                            <div style={{ fontSize: 28, fontWeight: 700, color: stat.color, fontFamily: "'Google Sans', 'Nunito', sans-serif" }}>{stat.value}</div>
+                            <div style={{ fontSize: 12, color: '#5F6368', fontFamily: "'Roboto', sans-serif", marginTop: 4 }}>{stat.label}</div>
+                        </div>
+                    ))}
+                </div>
             </motion.div>
         </div>
     </AnimatedSection>
 );
 
+// ─── SKILLS ───────────────────────────────────────────────────────────────────
 const Skills = () => {
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-100px 0px" });
+    const inView = useInView(ref, { once: true, margin: '-80px 0px' });
 
     return (
-        <AnimatedSection id="skills">
-            <SectionTitle>Technical Skills</SectionTitle>
-            <div ref={ref} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                {portfolioData.skills.map((skill, index) => {
-                    const Icon = icons[skill.icon] || icons.Code;
-                    return (
-                        <div key={index} className="flex flex-col items-center text-center p-4 bg-slate-800/50 rounded-lg shadow-md transition-all duration-300 hover:bg-slate-800 hover:-translate-y-2 border border-transparent hover:border-violet-500">
-                            <div className="text-violet-400 mb-3"><Icon size={40} /></div>
-                            <h3 className="font-semibold text-slate-200 mb-2">{skill.name}</h3>
-                            <div className="w-full bg-slate-700 rounded-full h-2.5">
-                                <motion.div
-                                    className="bg-gradient-to-r from-violet-500 to-indigo-500 h-2.5 rounded-full"
-                                    initial={{ width: 0 }}
-                                    animate={inView ? { width: `${skill.level}%` } : {}}
-                                    transition={{ duration: 1, delay: 0.2 + index * 0.1 }}
-                                />
-                            </div>
+        <AnimatedSection id="skills" style={{ background: '#fff' }}>
+            <SectionTitle subtitle="Technologies I work with">Technical Skills</SectionTitle>
+            <div ref={ref} style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                gap: 20,
+            }}>
+                {portfolioData.skills.map((skill, i) => (
+                    <motion.div
+                        key={i}
+                        style={{
+                            background: '#fff',
+                            border: `1.5px solid #E8EAED`,
+                            borderRadius: 16,
+                            padding: '20px 20px',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                            transition: 'all 0.2s',
+                        }}
+                        whileHover={{
+                            y: -4,
+                            borderColor: skill.color,
+                            boxShadow: `0 8px 24px ${skill.color}20`,
+                        }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={inView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.4, delay: i * 0.06 }}
+                    >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+                            <span style={{
+                                fontFamily: "'Roboto', sans-serif",
+                                fontSize: 14, fontWeight: 500, color: '#202124',
+                            }}>{skill.name}</span>
+                            <span style={{
+                                fontSize: 13, fontWeight: 600,
+                                color: skill.color,
+                                fontFamily: "'Google Sans', 'Nunito', sans-serif",
+                            }}>{skill.level}%</span>
                         </div>
-                    );
-                })}
+                        <div style={{ background: '#F1F3F4', borderRadius: 4, height: 6, overflow: 'hidden' }}>
+                            <motion.div
+                                style={{ height: '100%', borderRadius: 4, background: skill.color }}
+                                initial={{ width: 0 }}
+                                animate={inView ? { width: `${skill.level}%` } : {}}
+                                transition={{ duration: 0.9, delay: 0.2 + i * 0.07, ease: 'easeOut' }}
+                            />
+                        </div>
+                    </motion.div>
+                ))}
             </div>
         </AnimatedSection>
     );
 };
 
-const TimelineItem = ({ icon, title, subtitle, period, description, isLast }) => {
-    const IconComponent = icon === 'Briefcase' ? icons.Briefcase : icons.GraduationCap;
-
-    return (
-        <div className="relative flex items-start">
-            <div className="flex flex-col items-center mr-6">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-slate-800 inline-flex items-center justify-center text-violet-400 border-2 border-slate-700">
-                    <IconComponent />
-                </div>
-                {!isLast && <div className="w-px h-full bg-slate-700"></div>}
-            </div>
-            <div className="pb-16">
-                <p className="text-sm text-indigo-400 mb-1">{period}</p>
-                <h3 className="text-xl font-bold text-slate-100">{title}</h3>
-                <h4 className="text-md font-medium text-slate-400 mb-3">{subtitle}</h4>
-                <p className="text-slate-300 leading-relaxed">{description}</p>
-            </div>
+// ─── EXPERIENCE & EDUCATION ───────────────────────────────────────────────────
+const TimelineCard = ({ accent, period, title, subtitle, description, icon }) => (
+    <motion.div
+        style={{
+            position: 'relative',
+            paddingLeft: 28,
+            paddingBottom: 36,
+        }}
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+    >
+        {/* Line */}
+        <div style={{
+            position: 'absolute', left: 10, top: 32, bottom: 0,
+            width: 2, background: '#E8EAED',
+        }} />
+        {/* Dot */}
+        <div style={{
+            position: 'absolute', left: 0, top: 6,
+            width: 22, height: 22, borderRadius: '50%',
+            background: accent, boxShadow: `0 0 0 4px ${accent}20`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 10, color: '#fff',
+        }}>
+            {icon}
         </div>
-    );
-};
+
+        <div style={{
+            background: '#fff',
+            border: '1.5px solid #E8EAED',
+            borderRadius: 16,
+            padding: '20px 24px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+            marginLeft: 8,
+        }}>
+            <span style={{
+                display: 'inline-block',
+                background: `${accent}15`,
+                color: accent,
+                borderRadius: 12,
+                padding: '3px 12px',
+                fontSize: 12,
+                fontWeight: 600,
+                fontFamily: "'Roboto', sans-serif",
+                marginBottom: 10,
+            }}>{period}</span>
+            <h3 style={{
+                fontFamily: "'Google Sans', 'Nunito', sans-serif",
+                fontSize: 17, fontWeight: 700, color: '#202124', marginBottom: 4,
+            }}>{title}</h3>
+            <p style={{
+                fontFamily: "'Roboto', sans-serif",
+                fontSize: 14, color: accent, fontWeight: 500, marginBottom: 10,
+            }}>{subtitle}</p>
+            <p style={{
+                fontFamily: "'Roboto', sans-serif",
+                fontSize: 14, color: '#5F6368', lineHeight: 1.6,
+            }}>{description}</p>
+        </div>
+    </motion.div>
+);
 
 const Experience = () => (
-    <AnimatedSection id="experience">
-        <SectionTitle>Work Experience & Education</SectionTitle>
-        <div className="grid md:grid-cols-2 gap-16">
+    <AnimatedSection id="experience" style={{ background: '#F8F9FA' }}>
+        <SectionTitle subtitle="My journey so far">Experience & Education</SectionTitle>
+        <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: 48,
+        }}>
             <div>
-                <h3 className="text-2xl font-bold text-slate-200 mb-8 flex items-center"><icons.Briefcase className="mr-3 text-violet-400" />Experience</h3>
-                <div className="relative">
-                    {portfolioData.experience.map((item, index) => (
-                        <TimelineItem
-                            key={index}
-                            icon="Briefcase"
-                            title={item.role}
-                            subtitle={item.company}
-                            period={item.period}
-                            description={item.description}
-                            isLast={index === portfolioData.experience.length - 1}
-                        />
-                    ))}
-                </div>
+                <h3 style={{
+                    fontFamily: "'Google Sans', 'Nunito', sans-serif",
+                    fontSize: 20, fontWeight: 700, color: '#202124',
+                    marginBottom: 28,
+                    display: 'flex', alignItems: 'center', gap: 10,
+                }}>
+                    <span style={{
+                        background: '#4285F415', color: '#4285F4',
+                        borderRadius: 10, padding: '6px 14px', fontSize: 14,
+                    }}>💼 Work</span>
+                </h3>
+                {portfolioData.experience.map((item, i) => (
+                    <TimelineCard
+                        key={i}
+                        accent={item.accent}
+                        period={item.period}
+                        title={item.role}
+                        subtitle={item.company}
+                        description={item.description}
+                        icon="●"
+                    />
+                ))}
             </div>
             <div>
-                <h3 className="text-2xl font-bold text-slate-200 mb-8 flex items-center"><icons.GraduationCap className="mr-3 text-violet-400" />Education</h3>
-                <div className="relative">
-                    {portfolioData.education.map((item, index) => (
-                        <TimelineItem
-                            key={index}
-                            icon="GraduationCap"
-                            title={item.degree}
-                            subtitle={item.institution}
-                            period={item.period}
-                            description={item.cgpa}
-                            isLast={index === portfolioData.education.length - 1}
-                        />
-                    ))}
-                </div>
+                <h3 style={{
+                    fontFamily: "'Google Sans', 'Nunito', sans-serif",
+                    fontSize: 20, fontWeight: 700, color: '#202124',
+                    marginBottom: 28,
+                    display: 'flex', alignItems: 'center', gap: 10,
+                }}>
+                    <span style={{
+                        background: '#34A85315', color: '#34A853',
+                        borderRadius: 10, padding: '6px 14px', fontSize: 14,
+                    }}>🎓 Education</span>
+                </h3>
+                {portfolioData.education.map((item, i) => (
+                    <TimelineCard
+                        key={i}
+                        accent={item.accent}
+                        period={item.period}
+                        title={item.degree}
+                        subtitle={item.institution}
+                        description={item.cgpa}
+                        icon="●"
+                    />
+                ))}
             </div>
         </div>
     </AnimatedSection>
 );
 
-// **MODIFIED:** Added image display to ProjectCard
-const ProjectCard = ({ project, index }) => {
-    const controls = useAnimation();
-    const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-100px 0px" });
-
-    useEffect(() => {
-        if (inView) {
-            controls.start({ opacity: 1, y: 0, transition: { duration: 0.5, delay: index * 0.1 } });
-        }
-    }, [controls, inView, index]);
-
-    return (
-        <motion.div
-            ref={ref}
-            className="bg-slate-800/50 rounded-lg overflow-hidden group shadow-lg border border-slate-800"
-            initial={{ opacity: 0, y: 50 }}
-            animate={controls}
-            whileHover={{ scale: 1.03, y: -10, boxShadow: "0 25px 50px -12px rgb(99 102 241 / 0.25)", borderColor: '#8b5cf6' }}
-            transition={{ duration: 0.3 }}
-        >
-            {/* **NEW: Image Thumbnail** */}
-            {project.thumbnail && (
-                <div className="w-full h-48 overflow-hidden">
-                    <img
-                        src={project.thumbnail}
-                        alt={`${project.title} Thumbnail`}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
+// ─── PROJECTS ─────────────────────────────────────────────────────────────────
+const ProjectCard = ({ project, index }) => (
+    <motion.div
+        style={{
+            background: '#fff',
+            borderRadius: 20,
+            overflow: 'hidden',
+            border: '1.5px solid #E8EAED',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
+            display: 'flex', flexDirection: 'column',
+        }}
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: index * 0.1 }}
+        whileHover={{
+            y: -6,
+            borderColor: project.accent,
+            boxShadow: `0 16px 40px ${project.accent}20`,
+        }}
+    >
+        {/* Thumbnail */}
+        <div style={{ position: 'relative', height: 200, overflow: 'hidden', background: `${project.accent}10` }}>
+            {project.thumbnail ? (
+                <img
+                    src={project.thumbnail}
+                    alt={project.title}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s' }}
+                    className="project-img"
+                />
+            ) : (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                    <GoogleColorName name={project.title} />
                 </div>
             )}
+            <span style={{
+                position: 'absolute', top: 12, right: 12,
+                background: project.accent, color: '#fff',
+                borderRadius: 12, padding: '4px 12px',
+                fontSize: 11, fontWeight: 600,
+                fontFamily: "'Roboto', sans-serif",
+                letterSpacing: '0.5px',
+            }}>
+                {project.label}
+            </span>
+        </div>
 
-            <div className="p-6">
-                <h3 className="text-xl font-bold text-slate-100 mb-2">{project.title}</h3>
-                <p className="text-slate-400 mb-4 h-24">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                    {project.stack.map((tech) => (
-                        <span key={tech} className="bg-indigo-900/50 text-indigo-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">
-                            {tech}
-                        </span>
-                    ))}
-                </div>
-                <a href={project.link} className="inline-block text-violet-400 font-semibold group-hover:underline">
-                    View Project &rarr;
-                </a>
+        {/* Content */}
+        <div style={{ padding: '24px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+            <h3 style={{
+                fontFamily: "'Google Sans', 'Nunito', sans-serif",
+                fontSize: 18, fontWeight: 700, color: '#202124',
+                marginBottom: 10,
+            }}>{project.title}</h3>
+            <p style={{
+                fontFamily: "'Roboto', sans-serif",
+                fontSize: 14, color: '#5F6368', lineHeight: 1.65,
+                marginBottom: 16, flex: 1,
+            }}>{project.description}</p>
+
+            {/* Tech stack */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 20 }}>
+                {project.stack.map((tech, i) => (
+                    <span key={i} style={{
+                        background: `${GOOGLE_COLORS[i % 4]}12`,
+                        color: GOOGLE_COLORS[i % 4],
+                        borderRadius: 12,
+                        padding: '4px 12px',
+                        fontSize: 12, fontWeight: 500,
+                        fontFamily: "'Roboto', sans-serif",
+                    }}>
+                        {tech}
+                    </span>
+                ))}
             </div>
-        </motion.div>
-    );
-};
+
+            <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                    color: project.accent,
+                    fontFamily: "'Roboto', sans-serif",
+                    fontSize: 14, fontWeight: 600,
+                    textDecoration: 'none',
+                }}
+            >
+                View Project <Icon.Arrow />
+            </a>
+        </div>
+    </motion.div>
+);
 
 const Projects = () => (
-    <AnimatedSection id="projects">
-        <SectionTitle>Projects</SectionTitle>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {portfolioData.projects.map((project, index) => (
-                <ProjectCard key={index} project={project} index={index} />
+    <AnimatedSection id="projects" style={{ background: '#fff' }}>
+        <SectionTitle subtitle="Things I've built">Projects</SectionTitle>
+        <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+            gap: 24,
+        }}>
+            {portfolioData.projects.map((p, i) => (
+                <ProjectCard key={i} project={p} index={i} />
             ))}
         </div>
     </AnimatedSection>
 );
 
+// ─── CONTACT ──────────────────────────────────────────────────────────────────
 const Contact = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [form, setForm] = useState({ name: '', email: '', message: '' });
     const [loading, setLoading] = useState(false);
-    const [statusMessage, setStatusMessage] = useState({ text: '', type: '' }); // type: 'success' or 'error'
+    const [status, setStatus] = useState({ text: '', type: '' });
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-
-    // --- FINAL LIVE SUBMISSION LOGIC ---
-    // This URL is the expected public address for your backend service (e.g., deployed on Render).
-    const API_URL = 'https://portfolio-shahid-backend.vercel.app/api/contact';
+    const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setStatusMessage({ text: '', type: '' }); // Clear previous messages
+        setStatus({ text: '', type: '' });
         setLoading(true);
-
         try {
-            const response = await fetch(API_URL, {
+            const res = await fetch('https://portfolio-shahid-backend.vercel.app/api/contact', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form),
             });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                setStatusMessage({ text: data.msg || 'Message sent successfully! I will be in touch soon.', type: 'success' });
-                setFormData({ name: '', email: '', message: '' }); // Reset form
+            const data = await res.json();
+            if (res.ok) {
+                setStatus({ text: data.msg || "'Message sent! I'll get back to you soon.', type: 'success' "});
+                setForm({ name: '', email: '', message: '' });
             } else {
-                setStatusMessage({ text: data.msg || 'Server Error: Failed to send message. Please check the backend.', type: 'error' });
+                setStatus({ text: data.msg || 'Something went wrong.', type: 'error' });
             }
-        } catch (error) {
-            console.error('Submission Error:', error);
-            setStatusMessage({
-                text: `Connection Failed. Ensure your backend is deployed and running at ${API_URL}`,
-                type: 'error'
-            });
+        } catch {
+            setStatus({ text: 'Connection failed. Please try again later.', type: 'error' });
         } finally {
             setLoading(false);
         }
     };
-    // --- END FINAL LIVE SUBMISSION LOGIC ---
 
-    const socialLinks = [
-        { icon: 'Mail', href: `mailto:${portfolioData.contact.email}` },
-        { icon: 'Phone', href: `tel:${portfolioData.contact.phone}` },
-        { icon: 'Linkedin', href: portfolioData.contact.linkedin, target: '_blank' },
-        { icon: 'Github', href: portfolioData.contact.github, target: '_blank' },
-        { icon: 'Instagram', href: portfolioData.contact.instagram, target: '_blank' },
+    const socials = [
+        { icon: 'Mail', href: `mailto:${portfolioData.contact.email}`, color: '#EA4335' },
+        { icon: 'Phone', href: `tel:${portfolioData.contact.phone}`, color: '#34A853' },
+        { icon: 'Linkedin', href: portfolioData.contact.linkedin, color: '#4285F4' },
+        { icon: 'Github', href: portfolioData.contact.github, color: '#202124' },
+        { icon: 'Instagram', href: portfolioData.contact.instagram, color: '#EA4335' },
     ];
 
+    const inputStyle = {
+        width: '100%', boxSizing: 'border-box',
+        background: '#F8F9FA', border: '1.5px solid #E8EAED',
+        borderRadius: 12, padding: '14px 16px',
+        fontFamily: "'Roboto', sans-serif",
+        fontSize: 15, color: '#202124',
+        outline: 'none', transition: 'border-color 0.2s',
+    };
+
     return (
-        <AnimatedSection id="contact">
-            <SectionTitle>Get In Touch</SectionTitle>
-            <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-16 items-start">
-                <div className="text-slate-300">
-                    <h3 className="text-2xl font-bold text-slate-100 mb-4">Contact Information</h3>
-
-                    {/* **RESUME DOWNLOAD BUTTON IN CONTACT SECTION** */}
-                    <motion.a
-                        href="/Shahid.pdf" // Path to the file in the public folder
-                        download="Shahid-Fakir-Resume.pdf"
-                        className="flex items-center justify-center mb-8 w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-md hover:bg-indigo-700 transition-colors duration-300"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                    >
-                        <icons.Download className="mr-3" /> Download Resume (PDF)
-                    </motion.a>
-
-                    <p className="mb-8">
-                        Feel free to reach out to me for any opportunities, collaborations, or just to say hi!
+        <AnimatedSection id="contact" style={{ background: '#F8F9FA' }}>
+            <SectionTitle subtitle="Let's build something together">Get In Touch</SectionTitle>
+            <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                gap: 48,
+                alignItems: 'start',
+            }}>
+                {/* Left */}
+                <div>
+                    <h3 style={{
+                        fontFamily: "'Google Sans', 'Nunito', sans-serif",
+                        fontSize: 22, fontWeight: 700, color: '#202124', marginBottom: 16,
+                    }}>Contact Information</h3>
+                    <p style={{
+                        fontFamily: "'Roboto', sans-serif",
+                        fontSize: 15, color: '#5F6368', lineHeight: 1.7, marginBottom: 28,
+                    }}>
+                        Open to opportunities, collaborations, or just a chat. Feel free to reach out!
                     </p>
-                    <div className="space-y-4 mb-8">
-                        {Object.entries(portfolioData.contact).map(([key, value]) => {
-                            // Exclude non-link items like "linkedin", "github", "instagram" as they are handled below
-                            if (['email', 'phone'].includes(key)) {
-                                return (
-                                    <div key={key} className="flex items-center">
-                                        <span className="text-violet-400 mr-3 capitalize">{key}:</span>
-                                        <a href={key === 'email' ? `mailto:${value}` : `tel:${value}`} className="hover:text-violet-400 transition-colors">{value}</a>
-                                    </div>
-                                );
-                            }
-                            return null; // Skip rendering other contact properties here
-                        })}
+
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 28 }}>
+                        {[
+                            { label: 'Email', value: portfolioData.contact.email, href: `mailto:${portfolioData.contact.email}`, color: '#EA4335' },
+                            { label: 'Phone', value: portfolioData.contact.phone, href: `tel:${portfolioData.contact.phone}`, color: '#34A853' },
+                        ].map((item, i) => (
+                            <a
+                                key={i}
+                                href={item.href}
+                                style={{
+                                    display: 'flex', alignItems: 'center', gap: 12,
+                                    background: '#fff', borderRadius: 12, padding: '14px 18px',
+                                    border: `1.5px solid ${item.color}20`,
+                                    textDecoration: 'none',
+                                    boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+                                }}
+                            >
+                                <span style={{
+                                    width: 36, height: 36, borderRadius: '50%',
+                                    background: `${item.color}15`,
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    color: item.color, flexShrink: 0,
+                                }}>
+                                    {item.label === 'Email' ? <Icon.Mail /> : <Icon.Phone />}
+                                </span>
+                                <div>
+                                    <div style={{ fontSize: 11, color: item.color, fontWeight: 600, fontFamily: "'Roboto', sans-serif", textTransform: 'uppercase', letterSpacing: '0.5px' }}>{item.label}</div>
+                                    <div style={{ fontSize: 14, color: '#3C4043', fontFamily: "'Roboto', sans-serif" }}>{item.value}</div>
+                                </div>
+                            </a>
+                        ))}
                     </div>
-                    <div className="flex space-x-4">
-                        {socialLinks.map((link) => {
-                            const Icon = icons[link.icon];
+
+                    <div style={{ display: 'flex', gap: 10, marginBottom: 28, flexWrap: 'wrap' }}>
+                        {socials.map((s, i) => {
+                            const I = Icon[s.icon];
                             return (
                                 <motion.a
-                                    key={link.icon}
-                                    href={link.href}
-                                    target={link.target || '_self'}
+                                    key={i}
+                                    href={s.href}
+                                    target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-3 bg-slate-800 rounded-full text-slate-300 hover:bg-gradient-to-br hover:from-violet-500 hover:to-indigo-500 hover:text-white transition-all duration-300"
-                                    whileHover={{ scale: 1.1, y: -5 }}
-                                    whileTap={{ scale: 0.9 }}
+                                    style={{
+                                        width: 44, height: 44, borderRadius: '50%',
+                                        background: '#fff',
+                                        border: `1.5px solid ${s.color}25`,
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        color: s.color,
+                                        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                                    }}
+                                    whileHover={{ scale: 1.12, background: `${s.color}10` }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
-                                    <Icon />
+                                    <I />
                                 </motion.a>
                             );
                         })}
                     </div>
+
+                    <motion.a
+                        href="/Shahid.pdf" download="Shahid-Fakir-Resume.pdf"
+                        style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                            background: '#4285F4', color: '#fff', borderRadius: 12,
+                            padding: '14px 24px', textDecoration: 'none',
+                            fontFamily: "'Roboto', sans-serif", fontSize: 15, fontWeight: 500,
+                            boxShadow: '0 4px 16px rgba(66,133,244,0.3)',
+                        }}
+                        whileHover={{ background: '#3367D6', y: -2 }}
+                        whileTap={{ scale: 0.97 }}
+                    >
+                        <Icon.Download /> Download Resume
+                    </motion.a>
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Loading/Status Message */}
-                    {statusMessage.text && (
-                        <div className={`p-4 rounded-md ${statusMessage.type === 'success' ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}>
-                            {statusMessage.text}
+
+                {/* Form */}
+                <div style={{
+                    background: '#fff', borderRadius: 20, padding: 32,
+                    border: '1.5px solid #E8EAED',
+                    boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+                }}>
+                    {status.text && (
+                        <div style={{
+                            background: status.type === 'success' ? '#34A85315' : '#EA433515',
+                            color: status.type === 'success' ? '#34A853' : '#EA4335',
+                            borderRadius: 12, padding: '12px 16px',
+                            fontFamily: "'Roboto', sans-serif", fontSize: 14,
+                            marginBottom: 20,
+                        }}>
+                            {status.text}
                         </div>
                     )}
 
-                    <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">Name</label>
-                        <input type="text" name="name" id="name" required value={formData.name} onChange={handleChange} className="w-full bg-slate-800 border border-slate-700 rounded-md py-2 px-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500" disabled={loading} />
+                    {[
+                        { name: 'name', label: 'Your Name', type: 'text' },
+                        { name: 'email', label: 'Email Address', type: 'email' },
+                    ].map((field) => (
+                        <div key={field.name} style={{ marginBottom: 18 }}>
+                            <label style={{
+                                display: 'block', fontFamily: "'Roboto', sans-serif",
+                                fontSize: 13, fontWeight: 500, color: '#5F6368', marginBottom: 8,
+                            }}>{field.label}</label>
+                            <input
+                                type={field.type}
+                                name={field.name}
+                                required
+                                value={form[field.name]}
+                                onChange={handleChange}
+                                disabled={loading}
+                                style={inputStyle}
+                                onFocus={(e) => e.target.style.borderColor = '#4285F4'}
+                                onBlur={(e) => e.target.style.borderColor = '#E8EAED'}
+                            />
+                        </div>
+                    ))}
+
+                    <div style={{ marginBottom: 24 }}>
+                        <label style={{
+                            display: 'block', fontFamily: "'Roboto', sans-serif",
+                            fontSize: 13, fontWeight: 500, color: '#5F6368', marginBottom: 8,
+                        }}>Message</label>
+                        <textarea
+                            name="message"
+                            rows={4}
+                            required
+                            value={form.message}
+                            onChange={handleChange}
+                            disabled={loading}
+                            style={{ ...inputStyle, resize: 'vertical', minHeight: 120 }}
+                            onFocus={(e) => e.target.style.borderColor = '#4285F4'}
+                            onBlur={(e) => e.target.style.borderColor = '#E8EAED'}
+                        />
                     </div>
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">Email</label>
-                        <input type="email" name="email" id="email" required value={formData.email} onChange={handleChange} className="w-full bg-slate-800 border border-slate-700 rounded-md py-2 px-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500" disabled={loading} />
-                    </div>
-                    <div>
-                        <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">Message</label>
-                        <textarea name="message" id="message" rows="4" required value={formData.message} onChange={handleChange} className="w-full bg-slate-800 border border-slate-700 rounded-md py-2 px-3 text-slate-100 focus:outline-none focus:ring-2 focus:ring-violet-500" disabled={loading}></textarea>
-                    </div>
+
                     <motion.button
-                        type="submit"
-                        className="w-full bg-gradient-to-r from-violet-500 to-indigo-500 text-white font-bold py-3 px-6 rounded-md transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
+                        type="button"
+                        onClick={handleSubmit}
                         disabled={loading}
+                        style={{
+                            width: '100%', padding: '14px',
+                            background: loading ? '#ccc' : '#4285F4',
+                            color: '#fff', border: 'none', borderRadius: 12,
+                            fontFamily: "'Roboto', sans-serif",
+                            fontSize: 15, fontWeight: 500, cursor: loading ? 'not-allowed' : 'pointer',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                        }}
+                        whileHover={!loading ? { background: '#3367D6' } : {}}
+                        whileTap={!loading ? { scale: 0.98 } : {}}
                     >
-                        {loading ? 'Sending...' : 'Send Message'}
+                        {loading ? (
+                            <>
+                                <motion.div
+                                    style={{ width: 16, height: 16, borderRadius: '50%', border: '2px solid #fff3', borderTopColor: '#fff' }}
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
+                                />
+                                Sending...
+                            </>
+                        ) : 'Send Message'}
                     </motion.button>
-                </form>
+                </div>
             </div>
         </AnimatedSection>
     );
 };
 
+// ─── FOOTER ───────────────────────────────────────────────────────────────────
 const Footer = () => (
-    <footer className="bg-slate-900 border-t border-slate-800 py-6">
-        <div className="container mx-auto text-center text-slate-400">
-            <p>&copy; {new Date().getFullYear()} {portfolioData.name}. All Rights Reserved.</p>
+    <footer style={{
+        background: '#202124', padding: '28px 24px',
+        textAlign: 'center',
+    }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginBottom: 12 }}>
+            {GOOGLE_COLORS.map((c, i) => (
+                <div key={i} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />
+            ))}
         </div>
+        <p style={{
+            fontFamily: "'Roboto', sans-serif",
+            color: '#9AA0A6', fontSize: 13,
+        }}>
+            © {new Date().getFullYear()} <GoogleColorName name="Shahid Fakir" />. All rights reserved.
+        </p>
     </footer>
 );
 
-
-// --- MAIN APP COMPONENT ---
+// ─── APP ──────────────────────────────────────────────────────────────────────
 export default function App() {
-    // This effect is to add the necessary CDN links to the document's head
     useEffect(() => {
-        const tailwindScript = document.getElementById('tailwind-cdn');
-        if (!tailwindScript) {
-            const tailwind = document.createElement('script');
-            tailwind.id = 'tailwind-cdn';
-            tailwind.src = 'https://cdn.tailwindcss.com';
-            document.head.appendChild(tailwind);
-        }
+        document.body.style.background = '#fff';
+        document.body.style.margin = '0';
+        document.body.style.padding = '0';
 
-        document.body.style.backgroundColor = '#0f172a'; // slate-900
-        document.body.classList.add('bg-slate-900');
+        // Load Google Fonts
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&family=Nunito:wght@700;800&display=swap';
+        document.head.appendChild(link);
+
+        // Responsive + hover styles
+        const style = document.createElement('style');
+        style.textContent = `
+            * { box-sizing: border-box; margin: 0; padding: 0; }
+            body { background: #fff; }
+            .hide-mobile { display: flex; }
+            .show-mobile { display: none; }
+            @media (max-width: 768px) {
+                .hide-mobile { display: none !important; }
+                .show-mobile { display: block !important; }
+            }
+            .project-img:hover { transform: scale(1.08); }
+            html { scroll-behavior: smooth; }
+        `;
+        document.head.appendChild(style);
     }, []);
 
     return (
-        <div className="bg-slate-900 text-white font-sans">
+        <div style={{ fontFamily: "'Roboto', sans-serif", background: '#fff' }}>
             <Header />
-            <main>
+            <main style={{ paddingTop: 0 }}>
                 <Hero />
                 <About />
                 <Skills />
