@@ -61,34 +61,28 @@ const portfolioData = {
         },
     ],
     projects: [
-        {
-            title: "Project Management SaaS",
-            thumbnail: "/project-management-saas.png",
-            description: "Full-featured SaaS platform for team collaboration. Kanban boards, real-time updates via Socket.io, JWT auth, and Stripe subscriptions.",
-            stack: ["React", "TypeScript", "Node.js", "PostgreSQL", "Socket.io", "Stripe"],
-            link: "https://app-8t4ncskb8zcx.appmedo.com/login",
-            accent: "#4285F4",
-            label: "SaaS",
-        },
-        {
-            title: "Registration Dashboard",
-            thumbnail: "/Registration-dash.png",
-            description: "Dynamic dashboard with MongoDB integration, JWT authentication, user registration, login validation, and secure cookie management.",
-            stack: ["React", "Node.js", "Express.js", "MongoDB", "Bootstrap"],
-            link: "https://registration-dashboard-frontend.vercel.app/",
-            accent: "#34A853",
-            label: "Dashboard",
-        },
-        {
-            title: "Smart Waste Classification",
-            thumbnail: "/Smart-Waste.png",
-            description: "Upload an image to get instant AI-powered waste classification with detailed segregation tips for a cleaner, greener future.",
-            stack: ["Node.js", "React.js", "MongoDB"],
-            link: "https://smart-waste-frontend-orcin.vercel.app/",
-            accent: "#EA4335",
-            label: "AI/ML",
-        },
-    ],
+      
+    {
+        title: "CureConnect – Integrated OPD & Hyperlocal Pharmacy Network",
+        thumbnail: "/cureconnect.png",
+        description:
+            "Built and deployed a full-stack healthcare platform using the MERN stack for OPD queue management and real-time medicine discovery across nearby pharmacies. Implemented geolocation-based medicine search, QR-based reservation system, JWT authentication, and role-based dashboards.",
+        stack: [
+            "React.js",
+            "Node.js",
+            "Express.js",
+            "MongoDB",
+            "JWT",
+            "REST API",
+            "Vercel",
+            "Render"
+        ],
+        link: "https://your-project-link.com",
+        accent: "#4285F4",
+        label: "Healthcare",
+    },
+],
+    
 };
 
 const PROFILE_IMAGE_URL = "/shahid.jpeg";
