@@ -64,7 +64,7 @@ const portfolioData = {
       
     {
         title: "CureConnect – Integrated OPD & Hyperlocal Pharmacy Network",
-        thumbnail: "/cureconnect.png",
+        thumbnail: "/Thumbnail.png",
         description:
             "Built and deployed a full-stack healthcare platform using the MERN stack for OPD queue management and real-time medicine discovery across nearby pharmacies. Implemented geolocation-based medicine search, QR-based reservation system, JWT authentication, and role-based dashboards.",
         stack: [
